@@ -32,7 +32,7 @@ io.on('connection', (client) => {
     client.on('subscribeToSocket', (interval) => {
     console.log('client is subscribing to timer with interval ', interval);
     setInterval(() => {
-      var date = moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+      var date = moment().format("dddd, MMMM Do YYYY")
       client.emit('timer', date);
     }, interval);
   });

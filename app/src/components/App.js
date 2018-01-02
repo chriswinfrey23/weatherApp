@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
 import Navbar from './nav/navbar';
-import SubNav from './nav/subnav';
 import Forecast from './forecast/forecast';
-import Map from './map/map';
+import Loader from './loader/loader';
 import Footer from './footer/footer';
 import { getLocation } from '../assets/js/location';
 import { getWeather } from '../assets/js/weather';
 import { subscribeToSocket } from '../assets/js/socket';
 
+const Main = (props) => {
+  return (
+    <div className="container">
+      <Forecast {...props}/>
+    </div>
+  )
+}
+
+const Loading = (props) => {
+  return (
+    <div className="container-fluid h-100 mt-4">
+      <div className="row justify-content-center align-middle">
+        <Loader loading={props.loading}/>
+      </div>
+    </div>
+  )
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: 'no date yet',
+      date: "no date",
+      loading: true,
       geo: {
-        location: "",
-        city: ""
+        location: "33.444428699999996, -111.955992",
+        city: "Tempe, AZ, USA"
       },
       darkSky: {
         currently: {}
@@ -23,10 +41,23 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
-    subscribeToSocket((err, timestamp) => this.setState({
-      date: timestamp
-    }));
+  componentDidMount() {
+    let location = this.state.geo.location
+    subscribeToSocket((err, timestamp) => {
+      this.setState({
+        date: timestamp,
+      })
+    })
+    getWeather(location)
+      .then((response) => {
+        this.setState({
+          darkSky: response.data,
+          loading: false
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   OnChange(term) {
@@ -38,13 +69,15 @@ class App extends Component {
   }
 
   Location() {
+    this.setState({loading: true});
     getLocation((location) => {
       if(location.type === "success") {
         this.setState({
           geo: {
             location: location.response.coords,
-            city: location.response.city
-          }
+            city: location.response.city,
+          },
+          loading: false
         })
       } else  {
         let container = document.createElement("div");
@@ -61,12 +94,14 @@ class App extends Component {
 
 
   Weather(event) {
+    this.setState({loading: true});
     let location = this.state.geo.location;
     event.preventDefault();
     getWeather(location)
       .then((response) => {
         this.setState({
-          darkSky: response.data
+          darkSky: response.data,
+          loading: false
         })
       })
       .catch((error) => {
@@ -75,23 +110,19 @@ class App extends Component {
   }
 
   render() {
+
     return (
-      <div className="container-fluid px-0">
-        <Navbar weather={this.Weather.bind(this)} search={(term) => { this.OnChange(term); }} geo={this.state.geo} location={this.Location.bind(this)}/>
-        <SubNav conditions={this.state.darkSky.currently}/>
-        <Forecast/>
-        <Map location={this.state.geo.location}/>
-        <div className="container">
-          <div className="App">
-            <p className="d-flex justify-content-center">
-              Today's Date: {this.state.date}
-            </p>
-          </div>
+      <div>
+        <div className="container-fluid px-0">
+          <Navbar weather={this.Weather.bind(this)} search={(term) => { this.OnChange(term); }} geo={this.state.geo} date={this.state.date} location={this.Location.bind(this)}/>
         </div>
+        {this.state.loading ? (<Loading loading={this.state.loading}/>) : (<Main {...this.state}/>)}
         <Footer/>
       </div>
     );
   }
 }
+
+
 
 export default App;
