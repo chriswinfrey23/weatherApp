@@ -9,6 +9,7 @@ import registerServiceWorker from './assets/js/registerServiceWorker';
 //Bootstrap v4//
 window.$ = window.jQuery = require('jquery');
 window.Tether = require('tether');
+window.Popper = require('popper.js');
 require('bootstrap');
 
 

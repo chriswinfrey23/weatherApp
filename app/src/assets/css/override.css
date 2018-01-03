@@ -6,6 +6,14 @@ body {
   font-family: Raleway !important;
   background-color: #2b3e50;
 }
+
 .list-inline-item.subNav {
   margin-right: 3.5%;
+}
+
+.temp {
+  font-weight: bold;
+  font-size: 35px;
+  display: inline;
+  color: #df691a;
 }

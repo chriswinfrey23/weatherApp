@@ -11,7 +11,7 @@ export function getLocation(cb) {
     let location = `${position.coords.latitude}, ${position.coords.longitude}`;
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&key=${key}`)
       .then((response) => {
-        city = response.data.results[1].formatted_address
+        city = response.data.results[3].formatted_address
         return city;
       })
       .then(() => {
