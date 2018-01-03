@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 class Forecast extends Component {
   render () {
 
-    console.log("PROPS: ", this.props);
-
     return (
       <div>
         <div className="row">
