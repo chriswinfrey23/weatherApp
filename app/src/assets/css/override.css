@@ -17,3 +17,18 @@ body {
   display: inline;
   color: #df691a;
 }
+
+.text-primary {
+  color: #df691a !important;
+}
+
+.font30 {
+  font-size: 30px;
+}
+.inline {
+  display: inline-block;
+}
+
+.card-body.forecast {
+  min-height: 200px;
+}
