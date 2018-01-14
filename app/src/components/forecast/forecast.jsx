@@ -28,12 +28,12 @@ class Forecast extends Component {
       newHours.map((hour) => {
         return (
           <div key={hour.time} className="col-md-2 col-xs-6">
-            <div className="card bg-dark text-white">
+            <div className="card bg-dark text-white mb-4">
               <div className="card-header">
                 <div className="row">
                   <div className='col d-inline-block p-0'>{this.getIcon(hour.icon)}</div>
                   <div className='col text-primary d-inline-block p-0 font20'>{numeral(hour.temperature).format('00')+"º"}</div>
-                  <div className="col d-inline-block p-0 text-white" style={{marginTop: '5px'}}>{moment(hour.time * 1000).format('ha')}</div>
+                  <div className="col d-inline-block p-0" style={{marginTop: '5px'}}>{moment(hour.time * 1000).format('ha')}</div>
                 </div>
               </div>
               <div className="card-body">
@@ -49,7 +49,49 @@ class Forecast extends Component {
           )
         })
       )
-    } 
+    }
+
+    let weeklyForecast = (week) => {
+      week = [...week];
+      week = week.slice(1);
+      return (
+        week.map((day) => {
+          return (
+            <div key={day.time} className="col-md-4 col-xs-12">
+              <div className="card bg-dark text-white mb-4">
+                <div className="card-header text-warning">
+                  <strong>{moment(day.time * 1000).format('dddd, MMM Do')}</strong>
+                </div>
+                <div className="card-body">
+                  <div className='row'>
+                    <div className='col-md-2 d-inline-block p-0'>
+                      <div className='mt-2'>{this.getIcon(day.icon)}</div>
+                    </div>
+                    <div className='col-md-10 d-inline-block p-0'>
+                      <strong style={{fontSize: "15px"}}>{day.summary}</strong>
+                      <br />
+                      <div className='d-inline-block'>
+                        <span className="text-primary font20 mr-2"><b>{numeral(day.temperatureHigh).format('00')+"º"}</b></span>
+                        <span className="text-info font20 mr-2"><b>{numeral(day.temperatureLow).format('00')+"º"}</b></span>
+                        <i className='fa fa-umbrella fa-2'></i> {numeral(day.precipProbability).format('0%')}
+                        <i className='fa fa-cloud fa-2 ml-2'></i> {numeral(day.cloudCover).format('0%')}
+                      </div>
+                      <br />
+                      <div className='d-inline-block'>
+                        <small>
+                          <i className='fa fa-sun-o fa-2'></i> {moment(day.sunriseTime * 1000).tz(this.props.darkSky.timezone).format('hh:mm')}
+                          <i className='fa fa-moon-o fa-2 ml-2'></i> {moment(day.sunsetTime * 1000).tz(this.props.darkSky.timezone).format('hh:mm')}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })
+      )
+    }
 
     let current = this.props.darkSky.currently;
     let daily = this.props.darkSky.daily;
@@ -57,7 +99,7 @@ class Forecast extends Component {
     let minutely = this.props.darkSky.minutely;
     let hourly = this.props.darkSky.hourly.data;
 
-    // console.log(this.props);
+    // console.log(this.props.darkSky);
     return (
       <div>
         <div className="row">
@@ -65,14 +107,14 @@ class Forecast extends Component {
         </div>
         <div className="row">
           <div className="col">
-            <div className="card bg-dark text-white">
+            <div className="card bg-dark text-white mb-4">
               <div className="card-header">
                 <h3 className="font-weight-normal"><strong>Current Conditions </strong><small className="text-warning hidden-xs-down">{moment().format("hh:mm a")}</small></h3>
               </div>
               <div className="card-body forecast">
                 <div className="row">
                   <div className="col-md-4 p-0 d-inline-block">
-                    <div className="mt-4">
+                    <div className="mt-2">
                       {this.getIcon(current.icon)}
                     </div>
                   </div>
@@ -149,7 +191,10 @@ class Forecast extends Component {
             This Week's Forecast | <small className="text-info hidden-xs-down">{daily.summary}</small>
           </h4>
         </div>
-        {/*Weekly Forecasr*/}
+          {/*Weekly Forecast*/}
+        <div className="row">
+          {weeklyForecast(daily.data)}
+        </div>
 
       </div>
     )
