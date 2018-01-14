@@ -118,7 +118,7 @@ class App extends Component {
           <Navbar weather={this.Weather.bind(this)} search={(locationObj) => { this.setLocation(locationObj); }} geo={this.state.geo} date={this.state.date} location={this.geoLocation.bind(this)}/>
         </div>
         {this.state.loading ? (<Loading loading={this.state.loading}/>) : (<Main {...this.state}/>)}
-        {/* <Footer/> */}
+        <Footer/>
       </div>
     );
   }

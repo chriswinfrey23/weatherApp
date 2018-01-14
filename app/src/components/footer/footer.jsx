@@ -2,7 +2,7 @@ import React from 'react';
 
 const style = {
   bottom: "0",
-  position: "absolute",
+  position: "fixed",
   width: "100%"
 }
 
