@@ -36,7 +36,7 @@ class Forecast extends Component {
                   <div className="col d-inline-block p-0" style={{marginTop: '5px'}}>{moment(hour.time * 1000).format('ha')}</div>
                 </div>
               </div>
-              <div className="card-body">
+              <div className="card-body" style={{minHeight: "135px", padding: "15px"}}>
                 {hour.summary}
                 <br />
                 <i className='fa fa-umbrella fa-2'></i> {numeral(hour.precipProbability).format('0%')}
