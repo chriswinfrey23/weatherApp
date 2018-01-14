@@ -62,7 +62,7 @@ class Forecast extends Component {
                 <div className="card-header text-warning">
                   <strong>{moment(day.time * 1000).format('dddd, MMM Do')}</strong>
                 </div>
-                <div className="card-body">
+                <div className="card-body" style={{minHeight: "150px"}}>
                   <div className='row'>
                     <div className='col-md-2 d-inline-block p-0'>
                       <div className='mt-2'>{this.getIcon(day.icon)}</div>
@@ -99,7 +99,7 @@ class Forecast extends Component {
     let minutely = this.props.darkSky.minutely;
     let hourly = this.props.darkSky.hourly.data;
 
-    // console.log(this.props.darkSky);
+    console.log(this.props.darkSky);
     return (
       <div>
         <div className="row">
@@ -124,7 +124,7 @@ class Forecast extends Component {
                     </div>
                     <strong> {current.summary}</strong>
                     <br /> 
-                    {minutely.summary}
+                    {(minutely) ? minutely.summary : "No Summary available"}
                     <br />
                     {`Humidity: ${numeral(current.humidity).format('0%')}`} | {`Dew Point: ${numeral(current.dewPoint).format('00')}º`}
                     <br />

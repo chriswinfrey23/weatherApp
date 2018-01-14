@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 const google = window.google;
 
+
 export default class Navbar extends Component {
   constructor() {
     super()
@@ -17,7 +18,7 @@ export default class Navbar extends Component {
 
   initAutocomplete() {
     const autoComplete = new google.maps.places.Autocomplete((this.refs.autoComplete), {types: ['(cities)']});
-    autoComplete.addListener('place_changed', () => {this.updateCity(autoComplete)});
+    autoComplete.addListener('place_changed', () => { this.updateCity(autoComplete) });
   }
 
   updateState(input) {
@@ -59,7 +60,15 @@ export default class Navbar extends Component {
               <label className="sr-only" htmlFor="search" >Enter Location</label>
               <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div className="input-group-addon" onClick={this.props.location} style={style.location}><i className="fa fa-location-arrow"></i></div>
-                <input ref="autoComplete" value={this.state.input} onChange={(event) => { this.setState({input: event.target.value})}} className="form-control mr-sm-2" id="search" type="search" placeholder="Enter Location" aria-label="Search" />
+                <input 
+                ref="autoComplete" 
+                value={this.state.input} 
+                onChange={(event) => { this.setState({input: event.target.value})}} 
+                className="form-control mr-sm-2" 
+                id="search" 
+                type="search" 
+                placeholder="Search City" 
+                aria-label="Search" />
               </div>
                 <button style={style.location} disabled={!this.props.geo.city} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
             </form>
