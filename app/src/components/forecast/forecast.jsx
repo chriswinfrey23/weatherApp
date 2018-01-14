@@ -14,18 +14,50 @@ class Forecast extends Component {
     )
   }
 
-  hourlyForecast(days) {
-
-  }
 
   render () {
+
+    let hourlyForecast = (hours) => {
+      hours = [...hours];
+      hours = hours.slice(1)
+      let newHours = [];
+      for(var i = 0; i < 6; i++) {
+        newHours.push(hours[i]);
+      }
+      return (
+      newHours.map((hour) => {
+        return (
+          <div key={hour.time} className="col-md-2 col-xs-6">
+            <div className="card bg-dark text-white">
+              <div className="card-header">
+                <div className="row">
+                  <div className='col d-inline-block p-0'>{this.getIcon(hour.icon)}</div>
+                  <div className='col text-primary d-inline-block p-0 font20'>{numeral(hour.temperature).format('00')+"º"}</div>
+                  <div className="col d-inline-block p-0 text-white" style={{marginTop: '5px'}}>{moment(hour.time * 1000).format('ha')}</div>
+                </div>
+              </div>
+              <div className="card-body">
+                {hour.summary}
+                <br />
+                <i className='fa fa-umbrella fa-2'></i> {numeral(hour.precipProbability).format('0%')}
+                {(hour.precipProbability > 0) ? ' rain ' : ''}
+                <br />
+                <i className='fa fa-cloud fa-2'></i> {numeral(hour.cloudCover).format('0%')}
+              </div>
+            </div>
+          </div>
+          )
+        })
+      )
+    } 
 
     let current = this.props.darkSky.currently;
     let daily = this.props.darkSky.daily;
     let today = this.props.darkSky.daily.data[0];
     let minutely = this.props.darkSky.minutely;
+    let hourly = this.props.darkSky.hourly.data;
 
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <div className="row">
@@ -107,8 +139,11 @@ class Forecast extends Component {
         <div className="row mt-5">
           <h4 className="text-white font-weight-light my-2" style={{marginLeft: "15px"}}>Next Few Hours</h4>
         </div>
-        {/*hourly forecast*/}
-        {this.hourlyForecast(daily.data)}
+          {/*hourly forecast*/}
+        <div className="row">
+          {hourlyForecast(hourly)}
+        </div>
+
         <div className="row mt-5">
           <h4 className="text-white font-weight-light my-2" style={{marginLeft: "15px"}}>
             This Week's Forecast | <small className="text-info hidden-xs-down">{daily.summary}</small>

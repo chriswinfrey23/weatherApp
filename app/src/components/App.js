@@ -43,11 +43,11 @@ class App extends Component {
 
   componentDidMount() {
     let location = this.state.geo.location
-    subscribeToSocket((err, timestamp) => {
-      this.setState({
-        date: timestamp,
-      })
-    })
+    // subscribeToSocket((err, timestamp) => {
+    //   this.setState({
+    //     date: timestamp,
+    //   })
+    // })
     getWeather(location)
       .then((response) => {
         this.setState({
@@ -117,7 +117,7 @@ class App extends Component {
           <Navbar weather={this.Weather.bind(this)} search={(term) => { this.OnChange(term); }} geo={this.state.geo} date={this.state.date} location={this.Location.bind(this)}/>
         </div>
         {this.state.loading ? (<Loading loading={this.state.loading}/>) : (<Main {...this.state}/>)}
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     );
   }
