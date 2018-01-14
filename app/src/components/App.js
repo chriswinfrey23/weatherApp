@@ -60,15 +60,16 @@ class App extends Component {
       })
   }
 
-  OnChange(term) {
+  setLocation(locationObj) {
     this.setState({
       geo: {
-        city: term
+        location: locationObj.coords, 
+        city: locationObj.city
       }
     })
   }
 
-  Location() {
+  geoLocation() {
     this.setState({loading: true});
     getLocation((location) => {
       if(location.type === "success") {
@@ -114,7 +115,7 @@ class App extends Component {
     return (
       <div>
         <div className="container-fluid px-0">
-          <Navbar weather={this.Weather.bind(this)} search={(term) => { this.OnChange(term); }} geo={this.state.geo} date={this.state.date} location={this.Location.bind(this)}/>
+          <Navbar weather={this.Weather.bind(this)} search={(locationObj) => { this.setLocation(locationObj); }} geo={this.state.geo} date={this.state.date} location={this.geoLocation.bind(this)}/>
         </div>
         {this.state.loading ? (<Loading loading={this.state.loading}/>) : (<Main {...this.state}/>)}
         {/* <Footer/> */}
