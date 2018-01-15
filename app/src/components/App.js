@@ -5,7 +5,7 @@ import Loader from './loader/loader';
 import Footer from './footer/footer';
 import { getLocation } from '../assets/js/location';
 import { getWeather } from '../assets/js/weather';
-import { subscribeToSocket } from '../assets/js/socket';
+// import { subscribeToSocket } from '../assets/js/socket';
 
 const Main = (props) => {
   return (

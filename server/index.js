@@ -2,11 +2,11 @@ var express = require('express');
 var cors = require('cors');
 var app = express();
 var bodyParser = require('body-parser');
-var moment = require('moment');
+// var moment = require('moment');
 var axios = require('axios');
 
 const io = require('socket.io')();
-const socketPort = 8000;
+// const socketPort = 8000;
 const port = 8080;
 
 const url = "https://api.darksky.net/forecast";
@@ -28,15 +28,15 @@ app.post('/weather', (req, res) => {
     })
 })
 
-io.on('connection', (client) => {
-    client.on('subscribeToSocket', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      var date = moment().format("dddd, MMMM Do YYYY")
-      client.emit('timer', date);
-    }, interval);
-  });
-});
+// io.on('connection', (client) => {
+//     client.on('subscribeToSocket', (interval) => {
+//     console.log('client is subscribing to timer with interval ', interval);
+//     setInterval(() => {
+//       var date = moment().format("dddd, MMMM Do YYYY")
+//       client.emit('timer', date);
+//     }, interval);
+//   });
+// });
 
-io.listen(socketPort);
+// io.listen(socketPort);
 app.listen(port, () => console.log('listening on port ', port));
