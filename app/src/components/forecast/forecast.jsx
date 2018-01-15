@@ -33,7 +33,7 @@ class Forecast extends Component {
                 <div className="row">
                   <div className='col d-inline-block p-0'>{this.getIcon(hour.icon)}</div>
                   <div className='col text-primary d-inline-block p-0 font20'>{numeral(hour.temperature).format('00')+"º"}</div>
-                  <div className="col d-inline-block p-0" style={{marginTop: '5px'}}>{moment(hour.time * 1000).format('ha')}</div>
+                  <div className="col d-inline-block p-0" style={{marginTop: '5px'}}>{moment(hour.time * 1000).tz(this.props.darkSky.timezone).format('ha')}</div>
                 </div>
               </div>
               <div className="card-body" style={{minHeight: "135px", padding: "15px"}}>
@@ -109,7 +109,7 @@ class Forecast extends Component {
           <div className="col">
             <div className="card bg-dark text-white mb-4">
               <div className="card-header">
-                <h3 className="font-weight-normal"><strong>Current Conditions </strong><small className="text-warning hidden-xs-down">{moment().format("hh:mm a")}</small></h3>
+                <h3 className="font-weight-normal"><strong>Current Conditions </strong><small className="text-warning hidden-xs-down">{moment().tz(this.props.darkSky.timezone).format("hh:mm a")}</small></h3>
               </div>
               <div className="card-body forecast">
                 <div className="row">
