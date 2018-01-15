@@ -114,7 +114,7 @@ class Forecast extends Component {
               <div className="card-body forecast">
                 <div className="row">
                   <div className="col-md-4 p-0 d-inline-block">
-                    <div className="mt-2">
+                    <div className="mt-4">
                       {this.getIcon(current.icon)}
                     </div>
                   </div>
