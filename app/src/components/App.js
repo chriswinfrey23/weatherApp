@@ -31,6 +31,7 @@ class App extends Component {
     this.state = {
       date: "no date",
       loading: true,
+      currentCity: 'Tempe, AZ, USA',
       geo: {
         location: "33.444428699999996, -111.955992",
         city: "Tempe, AZ, USA"
@@ -42,22 +43,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let location = this.state.geo.location
-    // subscribeToSocket((err, timestamp) => {
-    //   this.setState({
-    //     date: timestamp,
-    //   })
-    // })
-    getWeather(location)
-      .then((response) => {
-        this.setState({
-          darkSky: response.data,
-          loading: false
-        })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    this.pullWeather();
   }
 
   setLocation(locationObj) {
@@ -82,25 +68,29 @@ class App extends Component {
         })
       } else  {
         let container = document.createElement("div");
-        container.className = "alert alert-warning my-0 text-center";
+        container.className = "alert alert-primary my-0 text-center";
         container.innerHTML = "Could not use GeoLocation, please search below"
         document.body.insertBefore(container, document.body.firstChild);
         setTimeout(() => {
           let ele = document.getElementsByClassName("alert");
           ele[0].remove();
         }, 3500)
+        this.setState({loading: false});
       }
     })
   }
 
 
-  Weather(event) {
+  pullWeather(event) {
+    if(event) {
+      event.preventDefault();
+    }    
     this.setState({loading: true});
     let location = this.state.geo.location;
-    event.preventDefault();
     getWeather(location)
       .then((response) => {
         this.setState({
+          currentCity: this.state.geo.city,
           darkSky: response.data,
           loading: false
         })
@@ -115,7 +105,7 @@ class App extends Component {
     return (
       <div>
         <div className="container-fluid px-0">
-          <Navbar weather={this.Weather.bind(this)} search={(locationObj) => { this.setLocation(locationObj); }} geo={this.state.geo} date={this.state.date} location={this.geoLocation.bind(this)}/>
+          <Navbar weather={this.pullWeather.bind(this)} search={(locationObj) => { this.setLocation(locationObj); }} geo={this.state.geo} date={this.state.date} location={this.geoLocation.bind(this)}/>
         </div>
         {this.state.loading ? (<Loading loading={this.state.loading}/>) : (<Main {...this.state}/>)}
         <Footer/>

@@ -70,7 +70,7 @@ export default class Navbar extends Component {
                 placeholder="Search City" 
                 aria-label="Search" />
               </div>
-                <button style={style.location} disabled={!this.props.geo.city} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <button style={style.location} disabled={!this.state.input}  className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
             </form>
             <ul className="navbar navbar-nav float-right text-white">
               <li>{this.props.date}</li>

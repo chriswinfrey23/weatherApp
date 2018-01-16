@@ -103,7 +103,7 @@ class Forecast extends Component {
     return (
       <div>
         <div className="row">
-          <h3 className="text-info font-weight-light my-2" style={{marginLeft: "15px"}}>{this.props.geo.city}</h3>
+          <h3 className="text-info font-weight-light my-2" style={{marginLeft: "15px"}}>{this.props.currentCity}</h3>
         </div>
         <div className="row">
           <div className="col">
